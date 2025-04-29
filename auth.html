@@ -10,25 +10,54 @@
 
 <body>
 
-    <div class="container d-flex justify-content-center align-items-center vh-100 mt-5">
+    <div class="container  justify-content-center  mt-5">
+        <h2>Inscription</h2>
         <div class="card text-white bg-dark bg-gradient shadow-lg" style="width: 22rem;">
             <div class="card-body">
                 <h3 class="card-title text-center mb-4">Inscription</h3>
                 <form action="" id="formInscrip">
                     <div class="mb-3">
-                        <label for="userName" class="form-label">Nom d'utilisateur</label>
-                        <input id="userName" type="text" class="form-control" placeholder="Entrez votre nom">
+                        <label for="" class="form-label">Nom d'utilisateur</label>
+                        <input id="userName" type="text" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="mail" class="form-label">Email</label>
-                        <input id="mail" type="email" class="form-control" placeholder="Entrez votre email">
+                        <label for="" class="form-label">Email</label>
+                        <input id="mail" type="email" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="mdp" class="form-label">Mot de passe</label>
-                        <input id="mdp" type="password" class="form-control" placeholder="Entrez votre mot de passe">
+                        <label for="" class="form-label">Mot de passe</label>
+                        <input id="mdp" type="password" class="form-control">
                     </div>
-                    <button type="submit" id="inscriptionButton"
-                        class="btn btn-light w-100 text-primary fw-bold">S'inscrire
+                    <div>
+                        <button type="submit" id="inscriptionButton" class="btn btn-primary">S'inscrire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Formulaire de connexion -->
+    <div class="container d-flex justify-content-center align-items-center vh-100 mt-5">
+        <div class="card text-white bg-secondary bg-gradient shadow-lg" style="width: 22rem;">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Connexion</h3>
+                <form action="" id="formConnexion">
+                    <div class="mb-3">
+                        <label for="mailConnexion" class="form-label">Email</label>
+                        <input id="mailConnexion" type="email" class="form-control" placeholder="Entrez votre email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="mdpConnexion" class="form-label">Mot de passe</label>
+                        <input id="mdpConnexion" type="password" class="form-control"
+                            placeholder="Entrez votre mot de passe">
+                    </div>
+                    <button type="submit" id="connexionButton" class="btn btn-light w-100 text-primary fw-bold">Se
+                        connecter
                     </button>
                 </form>
             </div>
@@ -37,24 +66,10 @@
 
 
 
-    <!-- <h2>Inscription</h2>
-    <form action="" id="formInscrip">
-        <div class="form-group">
-            <label for="" class="form-label">Nom d'utilisateur</label>
-            <input id="userName" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="" class="form-label">Email</label>
-            <input id="mail" type="email" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="" class="form-label">Mot de passe</label>
-            <input id="mdp" type="password" class="form-control">
-        </div>
-        <div>
-            <button type="submit" id="inscriptionButton" class="btn btn-primary">S'inscrire</button>
-        </div>
-    </form> -->
+
+
+
+
     <script src="assets/js/app.js"></script>
 </body>
 
