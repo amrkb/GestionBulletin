@@ -10,7 +10,7 @@
 
 <body>
 
-    <div class="container  justify-content-center  mt-5">
+    <!-- <div class="container  justify-content-center  mt-5">
         <h2>Inscription</h2>
         <div class="card text-white bg-dark bg-gradient shadow-lg" style="width: 22rem;">
             <div class="card-body">
@@ -34,7 +34,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 
@@ -42,7 +42,7 @@
 
 
     <!-- Formulaire de connexion -->
-    <div class="container d-flex justify-content-center align-items-center vh-100 mt-5">
+    <!-- <div class="container d-flex justify-content-center align-items-center vh-100 mt-5">
         <div class="card text-white bg-secondary bg-gradient shadow-lg" style="width: 22rem;">
             <div class="card-body">
                 <h3 class="card-title text-center mb-4">Connexion</h3>
@@ -62,15 +62,35 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
+
+<h3>Inscription</h3>
+<form onsubmit="register(event)">
+  <input type="text" id="name" placeholder="Nom" required>
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Mot de passe" required>
+  <button>S'inscrire</button>
+</form>
+
+<script>
+function register(e) {
+  e.preventDefault();
+  fetch('http://localhost:3000/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value
+    })
+  })
+  .then(res => res.json())
+  .then(data => alert(data.message || data.error));
+}
+</script>
 
 
 
-
-
-
-
-    <script src="assets/js/app.js"></script>
 </body>
 
 </html>

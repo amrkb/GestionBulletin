@@ -1,31 +1,77 @@
-const http =require("http");
-const fs = require("fs"); // Lire fichier
-const path = require("path");// lire un chemin
+// server/index.js
+const http = require('http'); 
+const fs = require('fs'); 
+const path = require('path'); 
 
-const userFile = path.join(__dirname, 'data','users.json');
-function getUsers() {
-    const data =fs.readFileSync(userFile,"utf-8");//Lire le contenu du fichier de maniere synchrone
-    return JSON.parse(data);
-}
-function saveUsers(users){
-    fs.writeFileSync(userFile,JSON.stringify(users,null,2),"utf-8");//Ecrire du contenu dans le fichier 
 
-}
-function body(req,callback){
-    let body = "";//Initialise la variable body
-    req.on("data",chunk => body += chunk); //Concatener les morceaux de donnees recu
-    req.on("end", ()=>callback(JSON.parse(body)));//une fois toutes les donnees recu on appelle le callback avec le corps de la requete parsé
-}
-// creation du serveur hhtp
-const server = http.createServer(req,res)=>{
-    if (req.url === "/inscrip" && req.method === "POST") {
-        body(req,(userData))=>{
-            const data = getUsers();
-            const userFound =userFile.find((u) => u.email ===  email && u.motDepasse === motDePasse);
-            if (userFound) {
-                res.writeHead(201,"Content-Type":"application/json");
-                return res.end(JSON.stringify(error:"Email existe deja"))
-            }
-        }
-    }
-}
+const usersFile = path.join(__dirname, 'data', 'users.json'); 
+
+function getUsers() { 
+const data = fs.readFileSync(usersFile, 'utf-8'); 
+return JSON.parse(data); 
+} 
+
+
+function saveUsers(users) { 
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2), 'utf-8'); 
+} 
+
+
+function parseBody(req, callback) { 
+let body = ''; 
+req.on('data', chunk => body += chunk); 
+req.on('end', () => callback(JSON.parse(body))); 
+} 
+
+
+const server = http.createServer((req, res) => { 
+   // Autorise les requêtes cross-origin
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+ 
+  //  // Gérer les requêtes préliminaires OPTIONS (préflight)
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200);
+      return res.end();
+     }
+
+if (req.url === '/register' && req.method === 'POST') { 
+  parseBody(req, (userData) => { 
+  const users = getUsers(); 
+  const exists = users.find(u => u.email === userData.email); 
+  if (exists) { 
+    res.writeHead(400, { 'Content-Type': 'application/json' }); 
+    return res.end(JSON.stringify({ error: 'Email déjà utilisé' })); 
+  } 
+  users.push(userData); 
+  saveUsers(users); 
+  res.writeHead(201, { 'Content-Type': 'application/json' }); 
+  res.end(JSON.stringify({ message: 'Inscription réussie' })); 
+  }); 
+} 
+else if (req.url === '/login' && req.method === 'POST') { 
+  parseBody(req, (loginData) => { 
+  const users = getUsers(); 
+  const found = users.find(u => u.email === loginData.email && u.password === 
+  loginData.password); 
+  if (found) { 
+        res.writeHead(200, { 'Content-Type': 'application/json' }); 
+        res.end(JSON.stringify({ message: 'Connexion réussie' })); 
+      } 
+  else { 
+        res.writeHead(401, { 'Content-Type': 'application/json' }); 
+        res.end(JSON.stringify({ error: 'Email ou mot de passe incorrect' })); 
+      } 
+    }); 
+} 
+else { 
+  res.writeHead(404); 
+  res.end(); 
+} 
+}); 
+
+
+server.listen(3000, () => { 
+console.log('Serveur démarré sur http://localhost:3000'); 
+});
