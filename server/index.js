@@ -1,4 +1,6 @@
 // server/index.js
+const rand = Math.random(); // génère un nombre entre 0 (inclus) et 1 (exclus)
+const bcrypt = require('bcrypt');
 const http = require('http'); 
 const fs = require('fs'); 
 const path = require('path'); 
@@ -15,6 +17,10 @@ return JSON.parse(data);
 function saveUsers(users) { 
   fs.writeFileSync(usersFile, JSON.stringify(users, null, 2), 'utf-8'); 
 } 
+function createId(){
+  const id = Math.floor(Math.random() * 90000) + 10000;
+  return id
+}
 
 
 function parseBody(req, callback) { 
@@ -37,14 +43,21 @@ const server = http.createServer((req, res) => {
      }
 
 if (req.url === '/register' && req.method === 'POST') { 
-  parseBody(req, (userData) => { 
+  parseBody(req, async(userData) => { 
   const users = getUsers(); 
   const exists = users.find(u => u.email === userData.email); 
   if (exists) { 
     res.writeHead(400, { 'Content-Type': 'application/json' }); 
     return res.end(JSON.stringify({ error: 'Email déjà utilisé' })); 
-  } 
-  users.push(userData); 
+  }
+  const newUser = {
+    id : createId(),
+    name : userData.name,
+    email : userData.email,
+    password : await bcrypt.hash(userData.password, 10),
+  }
+  
+  users.push(newUser); 
   saveUsers(users); 
   res.writeHead(201, { 'Content-Type': 'application/json' }); 
   res.end(JSON.stringify({ message: 'Inscription réussie' })); 
