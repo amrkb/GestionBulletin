@@ -40,5 +40,11 @@
     "name": "nudun",
     "email": "nunj@gmami.Xx",
     "password": "$2b$10$4AHjoQ1NyVCmn06/MRbw3emJ57Gr8uJozlx9wBrQXoUxTSuczBL0G"
+  },
+  {
+    "id": 16226,
+    "name": "test",
+    "email": "test@gmail.com",
+    "password": "$2b$10$0Z8E7Q3VTTwB6WJix3cJQ.KLO8A0PI0N.kvMISFcAMoXd1p2sM6gG"
   }
 ]
