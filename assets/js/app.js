@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let user = JSON.parse(localStorage.getItem("users")) || [];
 
     //Gestion d'inscription
+    //Bouton pour afficher le formulaire d'inscription
+    
+    
     document.getElementById("formInscrip").addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -90,5 +93,13 @@ async function login(e) {
         }
     } catch (err) {
         alert('Erreur réseau : ' + err);
+    }
+}
+function toggleInscription() {
+    const form = document.getElementById('Inscription');
+    if (form.hasAttribute('hidden')) {
+        form.removeAttribute('hidden');
+    } else {
+        form.setAttribute('hidden', '');
     }
 }
