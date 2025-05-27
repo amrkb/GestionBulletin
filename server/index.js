@@ -1,5 +1,5 @@
 // server/index.js
-const rand = Math.random(); // génère un nombre entre 0 (inclus) et 1 (exclus)
+const rand = Math.random(); 
 const bcrypt = require('bcrypt');
 const http = require('http');
 const fs = require('fs');
