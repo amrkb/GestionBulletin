@@ -18,16 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
         let EmailExiste = user.find((u) => u.email === email);
         if (EmailExiste) {
             alert("Email existe deja");
-        }else {
+        } else {
             const newUser = { userName, email, motDePasse };
             user.push(newUser);
             localStorage.setItem("users", JSON.stringify(user));
             alert("Inscription reussite");
         }
-        
+
     })
 
-    
+
     // Connexion
 
     document.getElementById("formConnexion").addEventListener("submit", function (e) {
@@ -49,3 +49,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 })
+function register(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (name && email && password) {
+        fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+        })
+            .then(res => res.json())
+            .then(data => alert(data.message || data.error));
+    } else {
+        alert('Veuillez remplir tous les champs');
+    }
+}
+async function login(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailConnexion').value;
+    const password = document.getElementById('passwordConnexion').value;
+
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+            alert(data.message);
+            // Stocke les infos utilisateur (sans le mot de passe) pour une utilisation ultérieure
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
+            window.location.href = 'index.html'; // Redirection après connexion
+        } else {
+            alert(data.error);
+        }
+    } catch (err) {
+        alert('Erreur réseau : ' + err);
+    }
+}
